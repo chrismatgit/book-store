@@ -16,11 +16,13 @@ def create_table():
 def insert_data(item, quantity, price):
     ''' Function to insert data into the database'''
     # create a connection
-    connection = psycopg2.connect("lite.db")
+    connection = psycopg2.connect("dbname='database1' user='postgres' password='' host='localhost' port='5432'")
     # create a cursor
     cursor = connection.cursor()
     # Sql comment goes in the function execute
-    cursor.execute("INSERT INTO store VALUES(?,?,?)",(item,quantity,price))
+    # cursor.execute("INSERT INTO store VALUES('%s','%s','%s')" % (item,quantity,price))
+    # to avoid an sql injection we should use this orther statement
+    cursor.execute("INSERT INTO store VALUES(%s,%s,%s)",(item,quantity,price))
     # Commit or execute the query
     connection.commit()
     # At the end close the connection
@@ -29,7 +31,7 @@ def insert_data(item, quantity, price):
 def view_data():
     ''' Function to view data from the database'''
     # create a connection
-    connection = psycopg2.connect("lite.db")
+    connection = psycopg2.connect("dbname='database1' user='postgres' password='' host='localhost' port='5432'")
     # create a cursor
     cursor = connection.cursor()
     # Sql comment goes in the function execute
@@ -45,11 +47,11 @@ def view_data():
 def delete_data(item):
     ''' Function to delete data from the database'''
     # create a connection
-    connection = psycopg2.connect("lite.db")
+    connection = psycopg2.connect("dbname='database1' user='postgres' password='' host='localhost' port='5432'")
     # create a cursor
     cursor = connection.cursor()
     # Sql comment goes in the function execute
-    cursor.execute("DELETE FROM store WHERE item=?", (item,))
+    cursor.execute("DELETE FROM store WHERE item=%s", (item,))
     # Commit or execute the query
     connection.commit()
     # At the end close the connection
@@ -58,18 +60,18 @@ def delete_data(item):
 def update_data(quantity,price,item):
     ''' Function to delete data from the database'''
     # create a connection
-    connection = psycopg2.connect("lite.db")
+    connection = psycopg2.connect("dbname='database1' user='postgres' password='' host='localhost' port='5432'")
     # create a cursor
     cursor = connection.cursor()
     # Sql comment goes in the function execute
-    cursor.execute("UPDATE store SET quantity=?, price=? WHERE item=?", (quantity,price,item,))
+    cursor.execute("UPDATE store SET quantity=%s, price=%s WHERE item=%s", (quantity,price,item,))
     # Commit or execute the query
     connection.commit()
     # At the end close the connection
     connection.close()
 
-create_table()
-# update_data(70, 9,"Juice") # update data from the database
-# delete_data("milk") # delete data
-# print(view_data())   
-# insert_data("milk", 20, 10) #insert data into the table
+# create_table()
+update_data(80, 19,"Juice") # update data from the database
+# delete_data("milk") # delete data  
+# insert_data("Juice", 70, 20) #insert data into the table
+print(view_data()) 
