@@ -3,6 +3,22 @@ from tkinter import *
 import backend
 
 
+def get_selected_row(event):
+    ''' Function that bind that the widget '''
+    global selected_tuple  # this a global variable mean it can be accessed out of the function
+    index = list1.curselection()[0]  # return the indeces of the selected item
+    selected_tuple = list1.get(index)
+    # to fill the entries with the selected data
+    e1.delete(0, END)  # to make sure the list is empty
+    e1.insert(END, selected_tuple[1])  # to insert the data
+    e2.delete(0, END)  # to make sure the list is empty
+    e2.insert(END, selected_tuple[2])  # to insert the data
+    e3.delete(0, END)  # to make sure the list is empty
+    e3.insert(END, selected_tuple[3])  # to insert the data
+    e4.delete(0, END)  # to make sure the list is empty
+    e4.insert(END, selected_tuple[4])  # to insert the data
+
+
 def view_command():
     ''' Function that execute the view command '''
     # to ensure that the list is empty before displaying any data
@@ -33,8 +49,24 @@ def add_command():
                        year_text.get(), isbn_text.get()))
 
 
+def delete_command():
+    ''' Function that execute the add command '''
+    # deleting data from the database
+    backend.delete_data(selected_tuple[0])
+
+
+def update_command():
+    ''' Function that execute the update command '''
+    # updating data to the database
+    backend.update_data(selected_tuple[0], title_text.get(), author_text.get(),
+                        year_text.get(), isbn_text.get())
+
+
 # create an empty window
 window = Tk()
+
+# adding the title to our window
+window.wm_title("Book Store")
 
 # create a label
 l1 = Label(window, text="Title")
@@ -85,6 +117,9 @@ sb1.grid(row=2, column=2, rowspan=6)
 list1.configure(yscrollcommand=sb1.set)
 sb1.configure(command=list1.yview)
 
+# binding a widget to a function in python
+list1.bind('<<ListboxSelect>>', get_selected_row)
+
 # create a view all button
 b1 = Button(window, text="View all", width=12, command=view_command)
 b1.grid(row=2, column=3)  # display the button
@@ -98,15 +133,15 @@ b3 = Button(window, text="Add entry", width=12, command=add_command)
 b3.grid(row=4, column=3)  # display the button
 
 # create an update button
-b4 = Button(window, text="Update selected", width=12)
+b4 = Button(window, text="Update selected", width=12, command=update_command)
 b4.grid(row=5, column=3)  # display the button
 
 # create a delete button
-b5 = Button(window, text="Delete selected", width=12)
+b5 = Button(window, text="Delete selected", width=12, command=delete_command)
 b5.grid(row=6, column=3)  # display the button
 
 # create a close button
-b6 = Button(window, text="Close", width=12)
+b6 = Button(window, text="Close", width=12, command=window.destroy)
 b6.grid(row=7, column=3)  # display the button
 
 window.mainloop()
