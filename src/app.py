@@ -1,4 +1,37 @@
 from tkinter import *
+# importing the backend
+import backend
+
+
+def view_command():
+    ''' Function that execute the view command '''
+    # to ensure that the list is empty before displaying any data
+    list1.delete(0, END)
+    for row in backend.view_data():  # accessing the list
+        # putting the row in the end of the list that are display
+        list1.insert(END, row)
+
+
+def search_command():
+    ''' Function that execute the search command '''
+    # to ensure that the list is empty before displaying any data
+    list1.delete(0, END)
+    # accessing the result as a list
+    for row in backend.search_data(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+        list1.insert(END, row)
+
+
+def add_command():
+    ''' Function that execute the add command '''
+    # insterting data to the database from the frontend
+    backend.insert_data(title_text.get(), author_text.get(),
+                        year_text.get(), isbn_text.get())
+    # to ensure that the list is empty before displaying any data
+    list1.delete(0, END)
+    # putting the row in the end of the list that are display
+    list1.insert(END, (title_text.get(), author_text.get(),
+                       year_text.get(), isbn_text.get()))
+
 
 # create an empty window
 window = Tk()
@@ -52,27 +85,27 @@ sb1.grid(row=2, column=2, rowspan=6)
 list1.configure(yscrollcommand=sb1.set)
 sb1.configure(command=list1.yview)
 
-# create a button
-b1 = Button(window, text="View all", width=12)
+# create a view all button
+b1 = Button(window, text="View all", width=12, command=view_command)
 b1.grid(row=2, column=3)  # display the button
 
-# create a button
-b2 = Button(window, text="Search entry", width=12)
+# create a search button
+b2 = Button(window, text="Search entry", width=12, command=search_command)
 b2.grid(row=3, column=3)  # display the button
 
-# create a button
-b3 = Button(window, text="Add entry", width=12)
+# create an add button
+b3 = Button(window, text="Add entry", width=12, command=add_command)
 b3.grid(row=4, column=3)  # display the button
 
-# create a button
+# create an update button
 b4 = Button(window, text="Update selected", width=12)
 b4.grid(row=5, column=3)  # display the button
 
-# create a button
+# create a delete button
 b5 = Button(window, text="Delete selected", width=12)
 b5.grid(row=6, column=3)  # display the button
 
-# create a button
+# create a close button
 b6 = Button(window, text="Close", width=12)
 b6.grid(row=7, column=3)  # display the button
 
