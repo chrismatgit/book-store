@@ -5,18 +5,23 @@ import backend
 
 def get_selected_row(event):
     ''' Function that bind that the widget '''
-    global selected_tuple  # this a global variable mean it can be accessed out of the function
-    index = list1.curselection()[0]  # return the indeces of the selected item
-    selected_tuple = list1.get(index)
-    # to fill the entries with the selected data
-    e1.delete(0, END)  # to make sure the list is empty
-    e1.insert(END, selected_tuple[1])  # to insert the data
-    e2.delete(0, END)  # to make sure the list is empty
-    e2.insert(END, selected_tuple[2])  # to insert the data
-    e3.delete(0, END)  # to make sure the list is empty
-    e3.insert(END, selected_tuple[3])  # to insert the data
-    e4.delete(0, END)  # to make sure the list is empty
-    e4.insert(END, selected_tuple[4])  # to insert the data
+    try:
+        # this a global variable mean it can be accessed out of the function
+        global selected_tuple
+        # return the indeces of the selected item
+        index = list1.curselection()[0]
+        selected_tuple = list1.get(index)
+        # to fill the entries with the selected data
+        e1.delete(0, END)  # to make sure the list is empty
+        e1.insert(END, selected_tuple[1])  # to insert the data
+        e2.delete(0, END)  # to make sure the list is empty
+        e2.insert(END, selected_tuple[2])  # to insert the data
+        e3.delete(0, END)  # to make sure the list is empty
+        e3.insert(END, selected_tuple[3])  # to insert the data
+        e4.delete(0, END)  # to make sure the list is empty
+        e4.insert(END, selected_tuple[4])  # to insert the data
+    except IndexError:
+        pass
 
 
 def view_command():
