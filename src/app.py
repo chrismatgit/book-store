@@ -1,6 +1,9 @@
 from tkinter import *
-# importing the backend
-import backend
+# importing the database
+from backend import Database
+
+# the database object
+database = Database()
 
 
 def get_selected_row(event):
@@ -28,7 +31,7 @@ def view_command():
     ''' Function that execute the view command '''
     # to ensure that the list is empty before displaying any data
     list1.delete(0, END)
-    for row in backend.view_data():  # accessing the list
+    for row in database.view_data():  # accessing the list
         # putting the row in the end of the list that are display
         list1.insert(END, row)
 
@@ -38,15 +41,15 @@ def search_command():
     # to ensure that the list is empty before displaying any data
     list1.delete(0, END)
     # accessing the result as a list
-    for row in backend.search_data(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+    for row in database.search_data(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
         list1.insert(END, row)
 
 
 def add_command():
     ''' Function that execute the add command '''
     # insterting data to the database from the frontend
-    backend.insert_data(title_text.get(), author_text.get(),
-                        year_text.get(), isbn_text.get())
+    database.insert_data(title_text.get(), author_text.get(),
+                         year_text.get(), isbn_text.get())
     # to ensure that the list is empty before displaying any data
     list1.delete(0, END)
     # putting the row in the end of the list that are display
@@ -57,14 +60,14 @@ def add_command():
 def delete_command():
     ''' Function that execute the add command '''
     # deleting data from the database
-    backend.delete_data(selected_tuple[0])
+    database.delete_data(selected_tuple[0])
 
 
 def update_command():
     ''' Function that execute the update command '''
     # updating data to the database
-    backend.update_data(selected_tuple[0], title_text.get(), author_text.get(),
-                        year_text.get(), isbn_text.get())
+    database.update_data(selected_tuple[0], title_text.get(), author_text.get(),
+                         year_text.get(), isbn_text.get())
 
 
 # create an empty window
