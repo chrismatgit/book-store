@@ -2,7 +2,8 @@ class Account:
     def __init__(self, filepath):
         self.filepath = filepath
         with open(filepath, 'r') as file:
-            self.balance = int(file.read())  # instance variable
+            # instance variable(define within a method of a class)
+            self.balance = int(file.read())
 
     def withdraw(self, amount):
         self.balance = self.balance - amount
@@ -18,6 +19,10 @@ class Account:
 
 
 class Checking(Account):
+    '''This class generates checking account objects(Doc strings)'''
+    # class varible can be shared with all the instance of that class
+    accout_type = "checking"
+
     def __init__(self, filepath, fee):
         Account.__init__(self, filepath)
         self.fee = fee
@@ -30,6 +35,8 @@ checking = Checking('balance.txt', 1)
 checking.transfer(40)
 checking.commit()
 print(checking.balance)
+print(checking.accout_type)
+print(checking.__doc__)  # provide information  about the class
 # account = Account("balance.txt")  # create an object instance
 # print(account.balance)
 # account.deposit(1300)
