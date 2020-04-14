@@ -18,20 +18,20 @@ class Account:
 # inheritance from bank account
 
 
-class Checking(Account):
+class Checking(Account):  # create a subclass out of a base class
     '''This class generates checking account objects(Doc strings)'''
     # class varible can be shared with all the instance of that class
     accout_type = "checking"
 
-    def __init__(self, filepath, fee):
+    def __init__(self, filepath, fee):  # constructor
         Account.__init__(self, filepath)
         self.fee = fee
 
-    def transfer(self, amount):
+    def transfer(self, amount):  # method
         self.balance = self.balance - amount - self.fee
 
 
-checking = Checking('balance.txt', 1)
+checking = Checking('balance.txt', 1)  # instantiation
 checking.transfer(40)
 checking.commit()
 print(checking.balance)
