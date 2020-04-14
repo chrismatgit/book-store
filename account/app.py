@@ -14,9 +14,24 @@ class Account:
         with open(self.filepath, 'w') as file:
             file.write(str(self.balance))
 
+# inheritance from bank account
 
-account = Account("balance.txt")  # create an object instance
-print(account.balance)
-account.deposit(1300)
-print(account.balance)
-account.commit()
+
+class Checking(Account):
+    def __init__(self, filepath, fee):
+        Account.__init__(self, filepath)
+        self.fee = fee
+
+    def transfer(self, amount):
+        self.balance = self.balance - amount - self.fee
+
+
+checking = Checking('balance.txt', 1)
+checking.transfer(40)
+checking.commit()
+print(checking.balance)
+# account = Account("balance.txt")  # create an object instance
+# print(account.balance)
+# account.deposit(1300)
+# print(account.balance)
+# account.commit()
